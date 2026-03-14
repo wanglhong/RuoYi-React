@@ -56,9 +56,7 @@ public class GenTable extends BaseEntity {
      */
     private String tplCategory;
 
-    /**
-     * 前端类型（element-ui模版 element-plus模版）
-     */
+    /** 前端类型（element-ui模版 element-plus模版 element-plus-typescript模版） */
     private String tplWebType;
 
     /**
