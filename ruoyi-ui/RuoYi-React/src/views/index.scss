@@ -1,0 +1,77 @@
+.home-page {
+  .stat-row {
+    margin-bottom: 24px;
+
+    .ant-card {
+      .ant-statistic-title {
+        color: #8c8c8c;
+        font-size: 14px;
+      }
+
+      .ant-statistic-content {
+        color: #262626;
+        font-size: 24px;
+        font-weight: 600;
+      }
+
+      .anticon {
+        color: #1890ff;
+        margin-right: 8px;
+      }
+    }
+  }
+
+  .permission-info-card {
+    margin-bottom: 24px;
+
+    .ant-alert {
+      p {
+        margin-bottom: 8px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
+  .permission-demo-card {
+    margin-bottom: 24px;
+
+    h4 {
+      margin-bottom: 12px;
+      color: #262626;
+      font-weight: 600;
+    }
+
+    pre {
+      margin: 0;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+  }
+
+  .welcome-card {
+    .ant-card-head {
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    p {
+      margin-bottom: 12px;
+      color: #595959;
+      line-height: 1.6;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    a {
+      color: #1890ff;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

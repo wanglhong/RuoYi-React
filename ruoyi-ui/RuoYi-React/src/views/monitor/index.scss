@@ -1,0 +1,80 @@
+.app-container {
+  padding: 20px;
+  background: #f0f2f5;
+  min-height: calc(100vh - 84px);
+}
+
+.search-card {
+  margin-bottom: 24px;
+}
+
+.search-card .ant-form-item {
+  margin-bottom: 0;
+}
+
+.table-card {
+  background: #fff;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+// 表格样式（用于服务监控、缓存监控）
+.table-container {
+  overflow-x: auto;
+
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+
+    thead {
+      tr {
+        th {
+          padding: 12px 8px;
+          text-align: left;
+          background-color: #fafafa;
+          border-bottom: 1px solid #f0f0f0;
+          font-weight: 500;
+          color: rgba(0, 0, 0, 0.85);
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        td {
+          padding: 12px 8px;
+          border-bottom: 1px solid #f0f0f0;
+          color: rgba(0, 0, 0, 0.65);
+
+          &:first-child {
+            font-weight: 500;
+            color: rgba(0, 0, 0, 0.85);
+          }
+        }
+
+        &:hover {
+          td {
+            background-color: #fafafa;
+          }
+        }
+      }
+    }
+  }
+}
+
+// 响应式设计
+@media (max-width: 768px) {
+  .app-container {
+    padding: 10px;
+  }
+
+  .toolbar {
+    flex-direction: column;
+    gap: 12px;
+  }
+}

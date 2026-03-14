@@ -1,0 +1,51 @@
+.sidebar-container {
+  height: 100%;
+  background: #fff;
+  box-shadow: 2px 0 8px rgba(29, 35, 41, 0.05);
+
+  .ant-layout-sider-trigger {
+    background: #fff;
+    color: #262626;
+    border-top: 1px solid #f0f0f0;
+  }
+
+  .sidebar-menu {
+    height: calc(100% - 48px);
+    overflow-y: auto;
+    border-right: none;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.12);
+      border-radius: 3px;
+    }
+
+    .ant-menu-item {
+      margin: 4px 0;
+      border-radius: 0;
+
+      &:hover {
+        color: #1890ff;
+      }
+
+      &.ant-menu-item-selected {
+        background: #e6f7ff;
+        color: #1890ff;
+        border-right: 3px solid #1890ff;
+      }
+    }
+
+    .ant-menu-submenu-title {
+      margin: 4px 0;
+      border-radius: 0;
+
+      &:hover {
+        color: #1890ff;
+      }
+    }
+  }
+}

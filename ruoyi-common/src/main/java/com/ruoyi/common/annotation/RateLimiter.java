@@ -5,19 +5,20 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+
 import com.ruoyi.common.constant.CacheConstants;
 import com.ruoyi.common.enums.LimitType;
 
 /**
  * 限流注解
- * 
+ *
  * @author ruoyi
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface RateLimiter
-{
+public @interface RateLimiter {
+
     /**
      * 限流key
      */
@@ -37,4 +38,5 @@ public @interface RateLimiter
      * 限流类型
      */
     public LimitType limitType() default LimitType.DEFAULT;
+
 }

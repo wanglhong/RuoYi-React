@@ -1,0 +1,1 @@
+import{r as e,j as a}from"./index-DwMc3KAS.js";const n=({src:t,style:r})=>{const[s,o]=e.useState("");return e.useEffect(()=>{t&&o(t)},[t]),a.jsx("iframe",{src:s,title:"iframe-content",style:{width:"100%",height:"calc(100vh - 120px)",border:"none",...r}})};export{n as I};

@@ -1,0 +1,1 @@
+import{r,j as e}from"./index-DwMc3KAS.js";import{I as a}from"./index-BbU1B0Yl.js";const u=()=>{const[s,t]=r.useState("");return r.useEffect(()=>{t("/prod-api"+"/swagger-ui/index.html")},[]),e.jsx(a,{src:s})};export{u as default};
