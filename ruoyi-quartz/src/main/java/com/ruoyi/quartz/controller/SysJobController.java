@@ -34,7 +34,7 @@ import com.ruoyi.quartz.util.ScheduleUtils;
  * @author ruoyi
  */
 @RestController
-@RequestMapping("/monitor/job")
+@RequestMapping("/api/monitor/job")
 public class SysJobController extends BaseController {
 
     @Autowired

@@ -29,7 +29,7 @@ import com.ruoyi.system.service.ISysDeptService;
  * @author ruoyi
  */
 @RestController
-@RequestMapping("/system/dept")
+@RequestMapping("/api/system/dept")
 public class SysDeptController extends BaseController {
 
     @Autowired

@@ -47,6 +47,8 @@ user:
 
 # Spring配置
 spring:
+  mvc:
+    throw-exception-if-no-handler-found: false
   # 资源信息
   messages:
     # 国际化资源文件路径

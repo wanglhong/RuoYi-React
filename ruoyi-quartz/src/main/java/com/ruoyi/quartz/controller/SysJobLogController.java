@@ -26,7 +26,7 @@ import com.ruoyi.quartz.service.ISysJobLogService;
  * @author ruoyi
  */
 @RestController
-@RequestMapping("/monitor/jobLog")
+@RequestMapping("/api/monitor/jobLog")
 public class SysJobLogController extends BaseController {
 
     @Autowired

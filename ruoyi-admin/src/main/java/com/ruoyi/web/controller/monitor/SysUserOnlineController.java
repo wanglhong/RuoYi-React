@@ -30,7 +30,7 @@ import com.ruoyi.system.service.ISysUserOnlineService;
  * @author ruoyi
  */
 @RestController
-@RequestMapping("/monitor/online")
+@RequestMapping("/api/monitor/online")
 public class SysUserOnlineController extends BaseController {
 
     @Autowired

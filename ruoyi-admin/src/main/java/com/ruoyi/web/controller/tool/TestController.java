@@ -27,7 +27,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
  */
 @Tag(name = "用户信息管理")
 @RestController
-@RequestMapping("/test/user")
+@RequestMapping("/api/test/user")
 public class TestController extends BaseController {
 
     private final static Map<Integer, UserEntity> users = new LinkedHashMap<Integer, UserEntity>();

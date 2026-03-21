@@ -29,14 +29,33 @@ public class ResourcesConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        /** 本地文件上传路径 */
-        registry.addResourceHandler(Constants.RESOURCE_PREFIX + "/**")
-                .addResourceLocations("file:" + RuoYiConfig.getProfile() + "/");
+//        /** 本地文件上传路径 */
+//        registry.addResourceHandler(Constants.RESOURCE_PREFIX + "/**")
+//                .addResourceLocations("file:" + RuoYiConfig.getProfile() + "/");
+//        /** swagger配置 */
+//        registry.addResourceHandler("/swagger-ui/**")
+//                .addResourceLocations("classpath:/META-INF/resources/webjars/springfox-swagger-ui/")
+//                .setCacheControl(CacheControl.maxAge(5, TimeUnit.HOURS).cachePublic());
 
-        /** swagger配置 */
+        /** 1. Knife4j 入口页面（最具体） */
+        // doc.html 所在位置（Knife4j）
+        registry.addResourceHandler("/doc.html")
+                .addResourceLocations("classpath:/META-INF/resources/");
+        /** 2. Swagger UI（springfox）—— 比 /webjars/** 更具体 */
         registry.addResourceHandler("/swagger-ui/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/springfox-swagger-ui/")
                 .setCacheControl(CacheControl.maxAge(5, TimeUnit.HOURS).cachePublic());
+        /** 3. 通用 WebJars（兜底 WebJars） */
+        registry.addResourceHandler("/webjars/**")
+                .addResourceLocations("classpath:/META-INF/resources/webjars/")
+                .setCacheControl(CacheControl.maxAge(5, TimeUnit.HOURS).cachePublic());
+        /** 4. 你的 React SPA 静态资源（注意：不能太早，否则会拦截上面的路径） */
+        registry.addResourceHandler("/**")
+                .addResourceLocations("classpath:/static/")
+                .setCacheControl(CacheControl.maxAge(5, TimeUnit.HOURS).cachePublic());
+        /** 5. 本地文件上传（通常不会冲突） */
+        registry.addResourceHandler(Constants.RESOURCE_PREFIX + "/**")
+                .addResourceLocations("file:" + RuoYiConfig.getProfile() + "/");
     }
 
     /**

@@ -31,7 +31,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @date ${datetime}
  */
 @RestController
-@RequestMapping("/${moduleName}/${businessName}")
+@RequestMapping("/api/${moduleName}/${businessName}")
 public class ${ClassName}Controller extends BaseController
 {
     @Autowired

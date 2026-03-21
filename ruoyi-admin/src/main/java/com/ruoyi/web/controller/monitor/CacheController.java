@@ -29,7 +29,7 @@ import com.ruoyi.system.domain.SysCache;
  * @author ruoyi
  */
 @RestController
-@RequestMapping("/monitor/cache")
+@RequestMapping("/api/monitor/cache")
 public class CacheController {
 
     @Autowired

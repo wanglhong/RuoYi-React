@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import com.ruoyi.common.annotation.Anonymous;
 import jakarta.annotation.Resource;
 
 import javax.imageio.ImageIO;
@@ -12,6 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.FastByteArrayOutputStream;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.google.code.kaptcha.Producer;
 import com.ruoyi.common.config.RuoYiConfig;
@@ -29,6 +31,7 @@ import com.ruoyi.system.service.ISysConfigService;
  * @author ruoyi
  */
 @RestController
+@RequestMapping("/api")
 public class CaptchaController {
 
     @Resource(name = "captchaProducer")
@@ -46,6 +49,7 @@ public class CaptchaController {
     /**
      * 生成验证码
      */
+    @Anonymous
     @GetMapping("/captchaImage")
     public AjaxResult getCode(HttpServletResponse response) throws IOException {
         AjaxResult ajax = AjaxResult.success();

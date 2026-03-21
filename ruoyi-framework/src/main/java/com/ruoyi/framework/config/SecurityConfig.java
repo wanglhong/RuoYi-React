@@ -95,15 +95,35 @@ public class SecurityConfig {
                 // 基于token，所以不需要session
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 // 注解标记允许匿名访问的url
+//                .authorizeHttpRequests((requests) -> {
+//                    permitAllUrl.getUrls().forEach(url -> requests.requestMatchers(url).permitAll());
+//                    // 对于登录login 注册register 验证码captchaImage 允许匿名访问
+//                    requests.requestMatchers("/login", "/register", "/captchaImage").permitAll()
+//                            // 静态资源，可匿名访问
+//                            .requestMatchers(HttpMethod.GET, "/", "/*.html", "/**.html", "/**.css", "/**.js", "/profile/**").permitAll()
+//                            .requestMatchers("/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**", "/druid/**").permitAll()
+//                            // 除上面外的所有请求全部需要鉴权认证
+//                            .anyRequest().authenticated();
+//                })
+//                .authorizeHttpRequests((requests) -> {
+//                    permitAllUrl.getUrls().forEach(url -> requests.requestMatchers(url).permitAll());
+//                    // 对于登录login 注册register 验证码captchaImage 允许匿名访问
+//                    requests.requestMatchers("/login", "/register", "/captchaImage").permitAll()
+//                            // 静态资源，可匿名访问
+//                            .requestMatchers(HttpMethod.GET, "/", "/*.html", "/**/*.html", "/*.ico", "/**/*.ico", "/*.png", "/**/*.png", "/*.css", "/**/*.css", "/*.js", "/**/*.js", "/profile/**", "/static/**").permitAll()
+//                            .requestMatchers("/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**", "/druid/**").permitAll()
+//                            // 除上面外的所有请求全部需要鉴权认证
+//                            .anyRequest().authenticated();
+//                })
                 .authorizeHttpRequests((requests) -> {
+                    // 1. 放行所有非 /api 开头的请求（包括前端页面、静态资源、根路径等）
                     permitAllUrl.getUrls().forEach(url -> requests.requestMatchers(url).permitAll());
-                    // 对于登录login 注册register 验证码captchaImage 允许匿名访问
-                    requests.requestMatchers("/login", "/register", "/captchaImage").permitAll()
-                            // 静态资源，可匿名访问
-                            .requestMatchers(HttpMethod.GET, "/", "/*.html", "/**.html", "/**.css", "/**.js", "/profile/**").permitAll()
-                            .requestMatchers("/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**", "/druid/**").permitAll()
-                            // 除上面外的所有请求全部需要鉴权认证
-                            .anyRequest().authenticated();
+                    requests.requestMatchers("/api/**").authenticated(); // 只有 /api/** 需要认证
+                    requests.requestMatchers("/**", "/**/*", "/**/**/*", "/**/**/**/*").permitAll();
+                    requests.requestMatchers(HttpMethod.GET, "/", "/*.html", "/**.html", "/**.css", "/**.js", "/profile/**").permitAll();
+                    requests.requestMatchers("/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**", "/druid/**").permitAll();
+                    requests.requestMatchers("/**/appspecific/com.chrome.devtools.json").permitAll();
+                    requests.anyRequest().permitAll();
                 })
                 // 添加Logout filter
                 .logout(logout -> logout.logoutUrl("/logout").logoutSuccessHandler(logoutSuccessHandler))

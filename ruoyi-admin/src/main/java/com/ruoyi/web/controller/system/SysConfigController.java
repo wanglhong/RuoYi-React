@@ -29,7 +29,7 @@ import com.ruoyi.system.service.ISysConfigService;
  * @author ruoyi
  */
 @RestController
-@RequestMapping("/system/config")
+@RequestMapping("/api/system/config")
 public class SysConfigController extends BaseController {
 
     @Autowired

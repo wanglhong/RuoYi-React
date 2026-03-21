@@ -18,6 +18,7 @@ import com.ruoyi.common.exception.DemoModeException;
 import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.html.EscapeUtil;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 /**
  * 全局异常处理器
@@ -102,6 +103,16 @@ public class GlobalExceptionHandler {
         String requestURI = request.getRequestURI();
         log.error("请求地址'{}',发生系统异常.", requestURI, e);
         return AjaxResult.error(e.getMessage());
+    }
+
+    /**
+     * 静态资源未找到异常（如 .map 文件）
+     */
+    @ExceptionHandler(NoResourceFoundException.class)
+    public AjaxResult handleNoResourceFound(NoResourceFoundException e, HttpServletRequest request) {
+        // 可选：记录 debug 日志，或完全静默
+        // log.debug("静态资源未找到: {}", request.getRequestURI());
+        return AjaxResult.error(HttpStatus.NOT_FOUND, "Not Found");
     }
 
     /**

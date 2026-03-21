@@ -28,7 +28,7 @@ import com.ruoyi.system.service.ISysMenuService;
  * @author ruoyi
  */
 @RestController
-@RequestMapping("/system/menu")
+@RequestMapping("/api/system/menu")
 public class SysMenuController extends BaseController {
 
     @Autowired
