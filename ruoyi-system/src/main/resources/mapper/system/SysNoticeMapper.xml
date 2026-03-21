@@ -18,16 +18,8 @@
     </resultMap>
 
     <sql id="selectNoticeVo">
-        select notice_id,
-               notice_title,
-               notice_type,
-               cast(notice_content as char) as notice_content,
-               status,
-               create_by,
-               create_time,
-               update_by,
-               update_time,
-               remark
+        select notice_id, notice_title, notice_type, cast(notice_content as char) as notice_content, status, create_by,
+        create_time, update_by, update_time, remark
         from sys_notice
     </sql>
 
@@ -49,6 +41,7 @@
                 AND create_by like concat('%', #{createBy}, '%')
             </if>
         </where>
+        order by notice_id desc
     </select>
 
     <insert id="insertNotice" parameterType="SysNotice">
@@ -85,9 +78,7 @@
     </update>
 
     <delete id="deleteNoticeById" parameterType="Long">
-        delete
-        from sys_notice
-        where notice_id = #{noticeId}
+        delete from sys_notice where notice_id = #{noticeId}
     </delete>
 
     <delete id="deleteNoticeByIds" parameterType="Long">

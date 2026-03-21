@@ -29,22 +29,8 @@
     </resultMap>
 
     <sql id="selectMenuVo">
-        select menu_id,
-               menu_name,
-               parent_id,
-               order_num,
-               path,
-               component,
-               `query`,
-               route_name,
-               is_frame,
-               is_cache,
-               menu_type,
-               visible,
-               status,
-               ifnull(perms, '') as perms,
-               icon,
-               create_time
+        select menu_id, menu_name, parent_id, order_num, path, component, `query`, route_name, is_frame, is_cache,
+        menu_type, visible, status, ifnull(perms,'') as perms, icon, create_time
         from sys_menu
     </sql>
 
@@ -65,25 +51,9 @@
     </select>
 
     <select id="selectMenuTreeAll" resultMap="SysMenuResult">
-        select distinct m.menu_id,
-                        m.parent_id,
-                        m.menu_name,
-                        m.path,
-                        m.component,
-                        m.`query`,
-                        m.route_name,
-                        m.visible,
-                        m.status,
-                        ifnull(m.perms, '') as perms,
-                        m.is_frame,
-                        m.is_cache,
-                        m.menu_type,
-                        m.icon,
-                        m.order_num,
-                        m.create_time
-        from sys_menu m
-        where m.menu_type in ('M', 'C')
-          and m.status = 0
+        select distinct m.menu_id, m.parent_id, m.menu_name, m.path, m.component, m.`query`, m.route_name, m.visible,
+        m.status, ifnull(m.perms,'') as perms, m.is_frame, m.is_cache, m.menu_type, m.icon, m.order_num, m.create_time
+        from sys_menu m where m.menu_type in ('M', 'C') and m.status = 0
         order by m.parent_id, m.order_num
     </select>
 
@@ -108,31 +78,14 @@
     </select>
 
     <select id="selectMenuTreeByUserId" parameterType="Long" resultMap="SysMenuResult">
-        select distinct m.menu_id,
-                        m.parent_id,
-                        m.menu_name,
-                        m.path,
-                        m.component,
-                        m.`query`,
-                        m.route_name,
-                        m.visible,
-                        m.status,
-                        ifnull(m.perms, '') as perms,
-                        m.is_frame,
-                        m.is_cache,
-                        m.menu_type,
-                        m.icon,
-                        m.order_num,
-                        m.create_time
+        select distinct m.menu_id, m.parent_id, m.menu_name, m.path, m.component, m.`query`, m.route_name, m.visible,
+        m.status, ifnull(m.perms,'') as perms, m.is_frame, m.is_cache, m.menu_type, m.icon, m.order_num, m.create_time
         from sys_menu m
-                 left join sys_role_menu rm on m.menu_id = rm.menu_id
-                 left join sys_user_role ur on rm.role_id = ur.role_id
-                 left join sys_role ro on ur.role_id = ro.role_id
-                 left join sys_user u on ur.user_id = u.user_id
-        where u.user_id = #{userId}
-          and m.menu_type in ('M', 'C')
-          and m.status = 0
-          AND ro.status = 0
+        left join sys_role_menu rm on m.menu_id = rm.menu_id
+        left join sys_user_role ur on rm.role_id = ur.role_id
+        left join sys_role ro on ur.role_id = ro.role_id
+        left join sys_user u on ur.user_id = u.user_id
+        where u.user_id = #{userId} and m.menu_type in ('M', 'C') and m.status = 0 AND ro.status = 0
         order by m.parent_id, m.order_num
     </select>
 
@@ -151,27 +104,24 @@
     <select id="selectMenuPerms" resultType="String">
         select distinct m.perms
         from sys_menu m
-                 left join sys_role_menu rm on m.menu_id = rm.menu_id
-                 left join sys_user_role ur on rm.role_id = ur.role_id
+        left join sys_role_menu rm on m.menu_id = rm.menu_id
+        left join sys_user_role ur on rm.role_id = ur.role_id
     </select>
 
     <select id="selectMenuPermsByUserId" parameterType="Long" resultType="String">
         select distinct m.perms
         from sys_menu m
-                 left join sys_role_menu rm on m.menu_id = rm.menu_id
-                 left join sys_user_role ur on rm.role_id = ur.role_id
-                 left join sys_role r on r.role_id = ur.role_id
-        where m.status = '0'
-          and r.status = '0'
-          and ur.user_id = #{userId}
+        left join sys_role_menu rm on m.menu_id = rm.menu_id
+        left join sys_user_role ur on rm.role_id = ur.role_id
+        left join sys_role r on r.role_id = ur.role_id
+        where m.status = '0' and r.status = '0' and ur.user_id = #{userId}
     </select>
 
     <select id="selectMenuPermsByRoleId" parameterType="Long" resultType="String">
         select distinct m.perms
         from sys_menu m
-                 left join sys_role_menu rm on m.menu_id = rm.menu_id
-        where m.status = '0'
-          and rm.role_id = #{roleId}
+        left join sys_role_menu rm on m.menu_id = rm.menu_id
+        where m.status = '0' and rm.role_id = #{roleId}
     </select>
 
     <select id="selectMenuById" parameterType="Long" resultMap="SysMenuResult">
@@ -180,9 +130,7 @@
     </select>
 
     <select id="hasChildByMenuId" resultType="Integer">
-        select count(1)
-        from sys_menu
-        where parent_id = #{menuId}
+        select count(1) from sys_menu where parent_id = #{menuId}
     </select>
 
     <select id="checkMenuNameUnique" parameterType="SysMenu" resultMap="SysMenuResult">
@@ -262,10 +210,12 @@
         )
     </insert>
 
+    <update id="updateMenuSort" parameterType="SysMenu">
+        update sys_menu set order_num = #{orderNum} where menu_id = #{menuId}
+    </update>
+
     <delete id="deleteMenuById" parameterType="Long">
-        delete
-        from sys_menu
-        where menu_id = #{menuId}
+        delete from sys_menu where menu_id = #{menuId}
     </delete>
 
 </mapper> 
