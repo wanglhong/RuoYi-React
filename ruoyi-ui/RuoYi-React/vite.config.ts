@@ -25,10 +25,19 @@ export default defineConfig(({ mode }) => {
       port: 3000,
       open: true,
       proxy: {
-        [env.VITE_APP_BASE_API]: {
-          target: 'http://localhost:8080',
+        '/api': {
+          target: env.VITE_API_TARGET,
+          changeOrigin: true
+        },
+        '/dev-api': {
+          target: env.VITE_API_TARGET,
           changeOrigin: true,
-          rewrite: (path) => path.replace(new RegExp(`^${env.VITE_APP_BASE_API}`), '')
+          rewrite: (path) => path.replace(/^\/dev-api/, '')
+        },
+        '/prod-api': {
+          target: env.VITE_API_TARGET,
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/prod-api/, '')
         }
       }
     }

@@ -5,7 +5,7 @@ import type { OperlogQueryParams, SysOperLog, AjaxResult, TableDataInfo } from '
 // 查询操作日志列表
 export function list(query: OperlogQueryParams): Promise<TableDataInfo<SysOperLog[]>> {
   return request({
-    url: '/monitor/operlog/list',
+    url: '/api/monitor/operlog/list',
     method: 'get',
     params: query
   })
@@ -15,7 +15,7 @@ export function list(query: OperlogQueryParams): Promise<TableDataInfo<SysOperLo
 export function delOperlog(operId: number | number[]): Promise<AjaxResult> {
   const idStr = Array.isArray(operId) ? operId.join(',') : operId.toString()
   return request({
-    url: '/monitor/operlog/' + idStr,
+    url: '/api/monitor/operlog/' + idStr,
     method: 'delete'
   })
 }
@@ -23,7 +23,7 @@ export function delOperlog(operId: number | number[]): Promise<AjaxResult> {
 // 清空操作日志
 export function cleanOperlog(): Promise<AjaxResult> {
   return request({
-    url: '/monitor/operlog/clean',
+    url: '/api/monitor/operlog/clean',
     method: 'delete'
   })
 }

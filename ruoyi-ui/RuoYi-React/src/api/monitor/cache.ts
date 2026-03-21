@@ -4,7 +4,7 @@ import type { SysCache, AjaxResult } from '@/types'
 // 查询缓存详细
 export function getCache(): Promise<AjaxResult<any>> {
   return request({
-    url: '/monitor/cache',
+    url: '/api/monitor/cache',
     method: 'get'
   })
 }
@@ -12,7 +12,7 @@ export function getCache(): Promise<AjaxResult<any>> {
 // 查询缓存名称列表
 export function listCacheName(): Promise<AjaxResult<SysCache[]>> {
   return request({
-    url: '/monitor/cache/getNames',
+    url: '/api/monitor/cache/getNames',
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function listCacheName(): Promise<AjaxResult<SysCache[]>> {
 // 查询缓存键名列表
 export function listCacheKey(cacheName: string): Promise<AjaxResult<string[]>> {
   return request({
-    url: '/monitor/cache/getKeys/' + cacheName,
+    url: '/api/monitor/cache/getKeys/' + cacheName,
     method: 'get'
   })
 }
@@ -28,7 +28,7 @@ export function listCacheKey(cacheName: string): Promise<AjaxResult<string[]>> {
 // 查询缓存内容
 export function getCacheValue(cacheName: string, cacheKey: string): Promise<AjaxResult<SysCache>> {
   return request({
-    url: '/monitor/cache/getValue/' + cacheName + '/' + cacheKey,
+    url: '/api/monitor/cache/getValue/' + cacheName + '/' + cacheKey,
     method: 'get'
   })
 }
@@ -36,7 +36,7 @@ export function getCacheValue(cacheName: string, cacheKey: string): Promise<Ajax
 // 清理指定名称缓存
 export function clearCacheName(cacheName: string): Promise<AjaxResult> {
   return request({
-    url: '/monitor/cache/clearCacheName/' + cacheName,
+    url: '/api/monitor/cache/clearCacheName/' + cacheName,
     method: 'delete'
   })
 }
@@ -44,7 +44,7 @@ export function clearCacheName(cacheName: string): Promise<AjaxResult> {
 // 清理指定键名缓存
 export function clearCacheKey(cacheKey: string): Promise<AjaxResult> {
   return request({
-    url: '/monitor/cache/clearCacheKey/' + cacheKey,
+    url: '/api/monitor/cache/clearCacheKey/' + cacheKey,
     method: 'delete'
   })
 }
@@ -52,7 +52,7 @@ export function clearCacheKey(cacheKey: string): Promise<AjaxResult> {
 // 清理全部缓存
 export function clearCacheAll(): Promise<AjaxResult> {
   return request({
-    url: '/monitor/cache/clearCacheAll',
+    url: '/api/monitor/cache/clearCacheAll',
     method: 'delete'
   })
 }

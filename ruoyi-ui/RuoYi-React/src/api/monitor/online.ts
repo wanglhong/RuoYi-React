@@ -4,7 +4,7 @@ import type { OnlineQueryParams, SysUserOnline, AjaxResult, TableDataInfo } from
 // 查询在线用户列表
 export function list(query: OnlineQueryParams): Promise<TableDataInfo<SysUserOnline[]>> {
   return request({
-    url: '/monitor/online/list',
+    url: '/api/monitor/online/list',
     method: 'get',
     params: query
   })
@@ -13,7 +13,7 @@ export function list(query: OnlineQueryParams): Promise<TableDataInfo<SysUserOnl
 // 强退用户
 export function forceLogout(tokenId: string): Promise<AjaxResult> {
   return request({
-    url: '/monitor/online/' + tokenId,
+    url: '/api/monitor/online/' + tokenId,
     method: 'delete'
   })
 }

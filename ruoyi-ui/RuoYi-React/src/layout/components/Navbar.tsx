@@ -2,7 +2,7 @@ import React from 'react'
 import { Layout, Avatar, Dropdown, Modal, message, Tooltip } from 'antd'
 import type { MenuProps } from 'antd'
 import { UserOutlined, LogoutOutlined, DownOutlined, ExclamationCircleOutlined, GithubOutlined, BookOutlined, HomeOutlined } from '@ant-design/icons'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { useUserStore, usePermissionStore } from '@/store'
 import './Navbar.scss'
 
@@ -23,10 +23,6 @@ const Navbar: React.FC<NavbarProps> = ({ collapsed, onToggle }) => {
   // 处理菜单点击
   const handleMenuClick: MenuProps['onClick'] = ({ key }) => {
     switch (key) {
-      case 'profile':
-        // 跳转到个人中心
-        navigate('/user/profile')
-        break
       case 'logout':
         handleLogout()
         break
@@ -68,7 +64,7 @@ const Navbar: React.FC<NavbarProps> = ({ collapsed, onToggle }) => {
     {
       key: 'profile',
       icon: <UserOutlined />,
-      label: '个人中心'
+      label: <Link to="/user/profile">个人中心</Link>
     },
     {
       type: 'divider'

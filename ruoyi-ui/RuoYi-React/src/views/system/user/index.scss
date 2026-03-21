@@ -1,20 +1,20 @@
 .user-management {
   height: 100%;
-  
+
   .user-layout {
     background: transparent;
-    
+
     .dept-sider {
       background: #fff;
       margin-right: 16px;
       border-radius: 4px;
       overflow: hidden;
-      
+
       .dept-header {
         padding: 16px;
         border-bottom: 1px solid #f0f0f0;
       }
-      
+
       .dept-tree {
         padding: 8px;
         height: calc(100% - 72px);
@@ -59,7 +59,7 @@
               -webkit-user-select: none;
               -moz-user-select: none;
               -ms-user-select: none;
-              
+
               &:hover {
                 background-color: transparent;
               }
@@ -68,19 +68,19 @@
         }
       }
     }
-    
+
     .user-content {
       background: transparent;
       min-width: 0;
-      
+
       .search-card {
         margin-bottom: 16px;
-        
+
         .ant-form-item {
           margin-bottom: 0;
         }
       }
-      
+
       .table-card {
         .toolbar {
           margin-bottom: 16px;
@@ -91,16 +91,16 @@
       }
     }
   }
-  
+
   // 操作按钮样式 - 参考 Vue 版本
   .ant-table-cell {
     .ant-space {
       gap: 0 !important;
-      
+
       .ant-btn-link {
         padding: 0 4px;
         height: auto;
-        
+
         &:hover {
           background: transparent;
         }
@@ -114,4 +114,54 @@
   padding: 20px;
   height: 100%;
   box-sizing: border-box;
+}
+
+// 表单标题样式 - 参考 Vue 版本
+.form-header {
+  font-size: 15px;
+  color: #6379bb;
+  border-bottom: 1px solid #ddd;
+  margin: 8px 10px 25px 10px;
+  padding-bottom: 5px;
+}
+
+// 表格行点击样式
+.ant-table {
+  tbody {
+    tr {
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+// 分页器样式 - 参考 Vue 版本
+.pagination-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+  background-color: transparent !important;
+
+  .ant-pagination {
+    position: static;
+  }
+}
+
+// 分配角色页面样式
+.auth-role {
+  .ant-card {
+    margin-bottom: 16px;
+  }
+
+  .ant-form-item-label > label {
+    font-weight: 500;
+  }
+}
+
+// 分配用户页面样式
+.auth-user {
+  .ant-card {
+    margin-bottom: 16px;
+  }
 }

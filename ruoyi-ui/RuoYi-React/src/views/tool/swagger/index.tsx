@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react'
-import IFrame from '@/components/iFrame'
+import React from 'react'
+
+import InnerLink from '@/components/InnerLink'
 
 const Swagger: React.FC = () => {
-  const [url, setUrl] = useState<string>('')
+  // 开发环境使用代理，生产环境直接使用后端路径
+  const isDev = import.meta.env.DEV
+  const url = isDev 
+    ? '/dev-api/swagger-ui/index.html' 
+    : '/swagger-ui/index.html'
 
-  useEffect(() => {
-    const baseUrl = import.meta.env.VITE_APP_BASE_API
-    setUrl(baseUrl + '/swagger-ui/index.html')
-  }, [])
-
-  return <IFrame src={url} />
+  return <InnerLink src={url} />
 }
 
 export default Swagger

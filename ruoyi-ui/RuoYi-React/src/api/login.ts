@@ -29,7 +29,7 @@ export interface CaptchaInfo {
 // 登录方法
 export function login(data: LoginParams): Promise<LoginResult> {
   return request({
-    url: '/login',
+    url: '/api/login',
     method: 'post',
     data
   })
@@ -38,7 +38,7 @@ export function login(data: LoginParams): Promise<LoginResult> {
 // 获取验证码
 export function getCodeImg(): Promise<CaptchaInfo> {
   return request({
-    url: '/captchaImage',
+    url: '/api/captchaImage',
     method: 'get'
   })
 }
@@ -46,7 +46,7 @@ export function getCodeImg(): Promise<CaptchaInfo> {
 // 退出登录
 export function logout(): Promise<ApiResponse<void>> {
   return request({
-    url: '/logout',
+    url: '/api/logout',
     method: 'post'
   })
 }

@@ -5,7 +5,7 @@ import type { ConfigQueryParams, SysConfig, AjaxResult, TableDataInfo } from '@/
 // 查询参数列表
 export function listConfig(query: ConfigQueryParams): Promise<TableDataInfo<SysConfig[]>> {
   return request({
-    url: '/system/config/list',
+    url: '/api/system/config/list',
     method: 'get',
     params: query
   })
@@ -14,7 +14,7 @@ export function listConfig(query: ConfigQueryParams): Promise<TableDataInfo<SysC
 // 查询参数详细
 export function getConfig(configId: number): Promise<AjaxResult<SysConfig>> {
   return request({
-    url: '/system/config/' + configId,
+    url: '/api/system/config/' + configId,
     method: 'get'
   })
 }
@@ -22,7 +22,7 @@ export function getConfig(configId: number): Promise<AjaxResult<SysConfig>> {
 // 根据参数键名查询参数值
 export function getConfigKey(configKey: string): Promise<AjaxResult> {
   return request({
-    url: '/system/config/configKey/' + configKey,
+    url: '/api/system/config/configKey/' + configKey,
     method: 'get'
   })
 }
@@ -30,7 +30,7 @@ export function getConfigKey(configKey: string): Promise<AjaxResult> {
 // 新增参数配置
 export function addConfig(data: SysConfig): Promise<AjaxResult> {
   return request({
-    url: '/system/config',
+    url: '/api/system/config',
     method: 'post',
     data: data
   })
@@ -39,7 +39,7 @@ export function addConfig(data: SysConfig): Promise<AjaxResult> {
 // 修改参数配置
 export function updateConfig(data: SysConfig): Promise<AjaxResult> {
   return request({
-    url: '/system/config',
+    url: '/api/system/config',
     method: 'put',
     data: data
   })
@@ -49,7 +49,7 @@ export function updateConfig(data: SysConfig): Promise<AjaxResult> {
 export function delConfig(configId: number | number[]): Promise<AjaxResult> {
   const idStr = Array.isArray(configId) ? configId.join(',') : configId.toString()
   return request({
-    url: '/system/config/' + idStr,
+    url: '/api/system/config/' + idStr,
     method: 'delete'
   })
 }
@@ -57,7 +57,7 @@ export function delConfig(configId: number | number[]): Promise<AjaxResult> {
 // 刷新参数缓存
 export function refreshCache(): Promise<AjaxResult> {
   return request({
-    url: '/system/config/refreshCache',
+    url: '/api/system/config/refreshCache',
     method: 'delete'
   })
 }

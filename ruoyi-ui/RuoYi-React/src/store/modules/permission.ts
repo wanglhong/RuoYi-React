@@ -38,8 +38,6 @@ export const usePermissionStore = create<PermissionState & PermissionActions>()(
       // 获取路由数据
       const routerData = res.data || []
 
-      console.log('原始路由数据:', routerData)
-
       // 转换路由（保留完整结构用于侧边栏）
       const accessedRoutes = filterAsyncRouter(JSON.parse(JSON.stringify(routerData)))
 
@@ -48,10 +46,6 @@ export const usePermissionStore = create<PermissionState & PermissionActions>()(
 
       // 过滤隐藏的路由用于侧边栏
       const sidebarRoutes = filterHiddenRoutes(routerData)
-
-      console.log('转换后的路由（完整）:', accessedRoutes)
-      console.log('Layout 子路由（用于路由注册）:', layoutChildren)
-      console.log('侧边栏路由:', sidebarRoutes)
 
       set({
         routes: accessedRoutes,

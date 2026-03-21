@@ -5,7 +5,7 @@ import type { PostQueryParams, SysPost, AjaxResult, TableDataInfo } from '@/type
 // 查询岗位列表
 export function listPost(query: PostQueryParams): Promise<TableDataInfo<SysPost[]>> {
   return request({
-    url: '/system/post/list',
+    url: '/api/system/post/list',
     method: 'get',
     params: query
   })
@@ -14,7 +14,7 @@ export function listPost(query: PostQueryParams): Promise<TableDataInfo<SysPost[
 // 查询岗位详细
 export function getPost(postId: number): Promise<AjaxResult<SysPost>> {
   return request({
-    url: '/system/post/' + postId,
+    url: '/api/system/post/' + postId,
     method: 'get'
   })
 }
@@ -22,7 +22,7 @@ export function getPost(postId: number): Promise<AjaxResult<SysPost>> {
 // 新增岗位
 export function addPost(data: SysPost): Promise<AjaxResult> {
   return request({
-    url: '/system/post',
+    url: '/api/system/post',
     method: 'post',
     data: data
   })
@@ -31,7 +31,7 @@ export function addPost(data: SysPost): Promise<AjaxResult> {
 // 修改岗位
 export function updatePost(data: SysPost): Promise<AjaxResult> {
   return request({
-    url: '/system/post',
+    url: '/api/system/post',
     method: 'put',
     data: data
   })
@@ -41,7 +41,7 @@ export function updatePost(data: SysPost): Promise<AjaxResult> {
 export function delPost(postId: number | number[]): Promise<AjaxResult> {
   const idStr = Array.isArray(postId) ? postId.join(',') : postId.toString()
   return request({
-    url: '/system/post/' + idStr,
+    url: '/api/system/post/' + idStr,
     method: 'delete'
   })
 }

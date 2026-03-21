@@ -1,12 +1,17 @@
 import React from 'react'
-import IFrame from '@/components/iFrame'
+
+import InnerLink from '@/components/InnerLink'
 
 const DruidMonitor: React.FC = () => {
-  const url = import.meta.env.VITE_APP_BASE_API + '/druid/login.html'
+  // 开发环境使用代理，生产环境直接使用后端路径
+  const isDev = import.meta.env.DEV
+  const url = isDev 
+    ? '/dev-api/druid/login.html' 
+    : '/druid/login.html'
 
   return (
     <div>
-      <IFrame src={url} />
+      <InnerLink src={url} />
     </div>
   )
 }

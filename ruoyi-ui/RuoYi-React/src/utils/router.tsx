@@ -1,6 +1,7 @@
 import React, { lazy } from 'react'
 import { Navigate } from 'react-router-dom'
 import Layout from '@/layout'
+import InnerLink from '@/components/InnerLink'
 
 /**
  * 动态路由处理工具
@@ -49,78 +50,69 @@ const modules = import.meta.glob('../views/**/*.tsx')
 
 /**
  * 根据组件路径加载组件
+ * 参考 Vue3 版本的 loadView 实现
  * @param componentPath 组件路径（如：'system/user/index'）
  */
 const loadComponent = (componentPath: string) => {
+  console.log('[loadComponent] 尝试加载组件:', componentPath)
+  console.log('[loadComponent] 可用模块路径:', Object.keys(modules).map(k => k.replace('../views/', '').replace('.tsx', '')))
+
   // 特殊组件处理
   if (componentMap[componentPath]) {
     return componentMap[componentPath]
   }
 
-  // 动态导入 views 下的组件
+  // 参考 Vue3 版本的匹配逻辑
+  // import.meta.glob 返回的路径格式如：../views/tool/swagger/index.tsx
+  // 需要提取 views/ 后的部分并去掉 .tsx，得到 tool/swagger/index
+  let res: any = null
+
+  for (const path in modules) {
+    // 从路径中提取组件名，如：../views/tool/swagger/index.tsx -> tool/swagger/index
+    const dir = path.replace('../views/', '').replace('.tsx', '')
+    if (dir === componentPath) {
+      console.log('[loadComponent] 找到匹配:', dir, '===', componentPath, '->', path)
+      res = lazy(modules[path] as any)
+      break
+    }
+  }
+
+  if (res) {
+    return res
+  }
+
+  // 如果直接匹配失败，尝试常见的路径格式
+  // 1. 尝试直接拼接 .tsx
   const directPath = `../views/${componentPath}.tsx`
   if (modules[directPath]) {
+    console.log('[loadComponent] 找到直接路径:', directPath)
     return lazy(modules[directPath] as any)
   }
 
-  // 尝试匹配 index.tsx
+  // 2. 尝试匹配 index.tsx
   const indexPath = `../views/${componentPath}/index.tsx`
   if (modules[indexPath]) {
+    console.log('[loadComponent] 找到 index 路径:', indexPath)
     return lazy(modules[indexPath] as any)
   }
 
-  // 尝试匹配 Index.tsx (大写)
+  // 3. 尝试匹配 Index.tsx (大写)
   const indexPathCapital = `../views/${componentPath}/Index.tsx`
   if (modules[indexPathCapital]) {
+    console.log('[loadComponent] 找到 Index 路径:', indexPathCapital)
     return lazy(modules[indexPathCapital] as any)
   }
 
-  // 尝试去掉 /index 后缀再匹配
-  if (componentPath.endsWith('/index') || componentPath.endsWith('/Index')) {
-    const basePath = componentPath.replace(/\/(index|Index)$/, '')
-    const basePathKey = `../views/${basePath}/index.tsx`
-    if (modules[basePathKey]) {
-      return lazy(modules[basePathKey] as any)
-    }
-  }
-
-  // 遍历所有模块查找匹配
-  for (const key in modules) {
-    const modulePath = key.replace('../views/', '').replace('.tsx', '')
-    if (modulePath === componentPath ||
-        modulePath === `${componentPath}/index` ||
-        modulePath === `${componentPath}/Index` ||
-        modulePath.replace('/index', '') === componentPath.replace('/index', '')) {
-      return lazy(modules[key] as any)
-    }
-  }
-
-  console.error(`组件未找到：${componentPath}`)
+  console.error('[loadComponent] 组件未找到:', componentPath)
   return () => ErrorComponent(`未找到组件：${componentPath}`) as any
 }
 
 /**
- * 创建外部链接跳转组件
- * @param url 外部链接地址
+ * 创建内链 iframe 组件
+ * @param url 内链地址
  */
-const createExternalLinkComponent = (url: string) => {
-  const ExternalLinkComponent = () => {
-    React.useEffect(() => {
-      // 在新标签页打开外部链接
-      window.open(url, '_blank')
-      // 跳转到首页
-      window.location.href = '/'
-    }, [url])
-    return React.createElement('div', {
-      style: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100%'
-      }
-    }, '正在跳转...')
-  }
-  return ExternalLinkComponent
+const createInnerLinkComponent = (url: string) => {
+  return () => React.createElement(InnerLink, { src: url })
 }
 
 /**
@@ -130,10 +122,10 @@ const createExternalLinkComponent = (url: string) => {
  */
 export const filterAsyncRouter = (asyncRouterMap: any[]): any[] => {
   return asyncRouterMap.filter(route => {
-    // 处理外部链接路由（meta.link 存在且不为 null）
+    // 处理内链路由（meta.link 存在且不为 null）
     if (route.meta?.link) {
-      // 创建外部链接跳转组件
-      route.element = createExternalLinkComponent(route.meta.link)
+      // 创建内链 iframe 组件
+      route.element = createInnerLinkComponent(route.meta.link)
       // 删除 component 字段
       delete route.component
     }
@@ -184,18 +176,18 @@ export const extractLayoutChildren = (routes: any[]): any[] => {
     // 如果是 Layout 组件的路由，提取其子路由
     if (route.component === 'Layout' && route.children && route.children.length > 0) {
       route.children.forEach((child: any) => {
-        // 拼接路径：父路径 + 子路径
+        // 拼接路径：父路径 + 子路径，然后去掉前导 / 使其成为相对路径
         const childPath = route.path + '/' + child.path
-        const fullPath = childPath.replace(/\/+/g, '/')
+        const fullPath = childPath.replace(/\/+/g, '/').replace(/^\/+/, '')
 
-        // 处理外部链接子路由
+        // 处理内链子路由
         if (child.meta?.link) {
           const newChild: any = {
             path: fullPath,
             name: child.name,
             meta: child.meta,
             hidden: child.hidden,
-            element: createExternalLinkComponent(child.meta.link)
+            element: createInnerLinkComponent(child.meta.link)
           }
           result.push(newChild)
         }
@@ -267,14 +259,14 @@ const processNestedRoute = (route: any, parentPath: string): any[] => {
     route.children.forEach((child: any) => {
       const fullPath = parentPath + '/' + child.path
 
-      // 处理外部链接子路由
+      // 处理内链子路由
       if (child.meta?.link) {
         const newChild: any = {
           path: fullPath,
           name: child.name,
           meta: child.meta,
           hidden: child.hidden,
-          element: createExternalLinkComponent(child.meta.link)
+          element: createInnerLinkComponent(child.meta.link)
         }
         result.push(newChild)
         return
@@ -298,7 +290,7 @@ const processNestedRoute = (route: any, parentPath: string): any[] => {
       }
 
       const newChild: any = {
-        path: fullPath.replace(/\/+/g, '/'),
+        path: fullPath.replace(/\/+/g, '/').replace(/^\/+/, ''),
         name: child.name,
         meta: child.meta,
         hidden: child.hidden,
@@ -314,14 +306,14 @@ const processNestedRoute = (route: any, parentPath: string): any[] => {
       }
     })
   } else {
-    // 处理外部链接
+    // 处理内链
     if (route.meta?.link) {
       result.push({
-        path: parentPath,
+        path: parentPath.replace(/^\/+/, ''),
         name: route.name,
         meta: route.meta,
         hidden: route.hidden,
-        element: createExternalLinkComponent(route.meta.link)
+        element: createInnerLinkComponent(route.meta.link)
       })
       return
     }
@@ -344,7 +336,7 @@ const processNestedRoute = (route: any, parentPath: string): any[] => {
     }
 
     result.push({
-      path: parentPath,
+      path: parentPath.replace(/^\/+/, ''),
       name: route.name,
       meta: route.meta,
       hidden: route.hidden,

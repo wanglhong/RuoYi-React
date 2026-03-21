@@ -106,7 +106,7 @@ export interface SysRole {
   remark?: string
   menuIds?: number[]
   deptIds?: number[]
-  flag?: string
+  flag?: boolean | string
   username?: string
   password?: string
 }
@@ -140,6 +140,29 @@ export interface DeptTree {
   label: string
   disabled?: boolean
   children?: DeptTree[]
+}
+
+// 个人中心相关类型
+export interface UserProfileResult {
+  code: number
+  msg: string
+  data: SysUser
+  roleGroup: string
+  postGroup: string
+}
+
+export interface UserProfileAvatarResult {
+  code: number
+  msg: string
+  imgUrl: string
+}
+
+// 用户授权角色响应
+export interface UserAuthRoleResult {
+  code: number
+  msg: string
+  user: SysUser
+  roles: SysRole[]
 }
 
 // 类型别名导出

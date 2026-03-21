@@ -4,7 +4,7 @@ import type { JobLogQueryParams, SysJobLog, AjaxResult, TableDataInfo } from '@/
 // 查询调度日志列表
 export function listJobLog(query: JobLogQueryParams): Promise<TableDataInfo<SysJobLog[]>> {
   return request({
-    url: '/monitor/jobLog/list',
+    url: '/api/monitor/jobLog/list',
     method: 'get',
     params: query
   })
@@ -13,7 +13,7 @@ export function listJobLog(query: JobLogQueryParams): Promise<TableDataInfo<SysJ
 // 删除调度日志
 export function delJobLog(jobLogId: number | number[]): Promise<AjaxResult> {
   return request({
-    url: '/monitor/jobLog/' + jobLogId,
+    url: '/api/monitor/jobLog/' + jobLogId,
     method: 'delete'
   })
 }
@@ -21,7 +21,7 @@ export function delJobLog(jobLogId: number | number[]): Promise<AjaxResult> {
 // 清空调度日志
 export function cleanJobLog(): Promise<AjaxResult> {
   return request({
-    url: '/monitor/jobLog/clean',
+    url: '/api/monitor/jobLog/clean',
     method: 'delete'
   })
 }

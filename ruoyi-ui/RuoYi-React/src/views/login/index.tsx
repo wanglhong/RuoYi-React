@@ -27,31 +27,40 @@ const Login: React.FC = () => {
 
   // 获取验证码
   const getCode = async () => {
+    if (codeLoading) return // 防止重复请求
     setCodeLoading(true)
     try {
       const res = await getCodeImg()
-      
-      // 检查返回数据结构 - 字段在顶层，不是嵌套在data中
+      console.log('验证码接口返回数据:', res)
+
+      // 检查返回数据结构 - 字段在顶层，不是嵌套在 data 中
       if (!res) {
         throw new Error('验证码接口返回数据为空')
       }
 
       const { captchaEnabled: enabled, img, uuid, code } = res
-      
+
       // 检查返回状态码
       if (code !== 200) {
+        // 如果是 401 错误，说明后端需要认证，但登录页面不应该需要
+        if (code === 401) {
+          console.warn('验证码接口返回 401，可能是后端配置问题')
+          // 不显示错误，直接使用空验证码或禁用验证码
+          setCaptchaEnabled(false)
+          return
+        }
         throw new Error(res.msg || '验证码获取失败')
       }
-      
+
       // 设置验证码是否启用
       setCaptchaEnabled(enabled !== false)
-      
+
       // 如果验证码启用且有图片数据
       if (enabled !== false && img) {
-        // 直接使用后端返回的base64图片（不包含前缀）
+        // 直接使用后端返回的 base64 图片（不包含前缀）
         setCodeUrl('data:image/gif;base64,' + img)
         setLoginForm(prev => ({ ...prev, uuid: uuid || '' }))
-        console.log('验证码获取成功, uuid:', uuid)
+        console.log('验证码获取成功，uuid:', uuid)
       } else {
         // 验证码被禁用
         console.log('验证码已禁用')
@@ -59,18 +68,30 @@ const Login: React.FC = () => {
       }
     } catch (error: any) {
       console.error('获取验证码失败:', error)
-      
+      console.error('错误详情:', {
+        message: error.message,
+        response: error.response?.data,
+        status: error.response?.status
+      })
+
+      // 401 错误不显示提示，可能是后端配置问题
+      if (error.response?.status === 401 || error.code === 401) {
+        console.warn('验证码接口需要认证，已自动禁用验证码')
+        setCaptchaEnabled(false)
+        return
+      }
+
       // 显示错误信息
       if (error.response) {
-        // HTTP错误
-        message.error(`验证码获取失败: ${error.response.status} ${error.response.statusText}`)
+        // HTTP 错误
+        message.error(`验证码获取失败：${error.response.status} ${error.response.statusText}`)
       } else if (error.message) {
         // 其他错误
-        message.error(`验证码获取失败: ${error.message}`)
+        message.error(`验证码获取失败：${error.message}`)
       } else {
         message.error('验证码获取失败，请检查网络连接')
       }
-      
+
       // 清空验证码图片
       setCodeUrl('')
     } finally {
@@ -78,12 +99,12 @@ const Login: React.FC = () => {
     }
   }
 
-  // 从localStorage获取记住的用户名密码
+  // 从 localStorage 获取记住的用户名密码
   const getCookie = () => {
     const username = localStorage.getItem('username')
     const password = localStorage.getItem('password')
     const rememberMe = localStorage.getItem('rememberMe')
-    
+
     if (username && password) {
       setLoginForm({
         username,
@@ -128,7 +149,7 @@ const Login: React.FC = () => {
       })
 
       message.success('登录成功')
-      
+
       // 跳转到重定向地址或首页
       const redirect = (location.state as any)?.from || '/index'
       navigate(redirect, { replace: true })
@@ -153,7 +174,7 @@ const Login: React.FC = () => {
     <div className="login-container">
       <div className="login-form-wrapper">
         <h2 className="login-title">若依后台管理系统</h2>
-        
+
         <Form
           form={form}
           name="login"
@@ -208,7 +229,7 @@ const Login: React.FC = () => {
                     title="点击刷新验证码"
                   />
                 ) : (
-                  <div 
+                  <div
                     className="captcha-placeholder"
                     onClick={getCode}
                     title="点击获取验证码"

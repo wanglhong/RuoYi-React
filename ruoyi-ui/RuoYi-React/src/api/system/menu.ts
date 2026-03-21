@@ -5,7 +5,7 @@ import type { MenuQueryParams, SysMenu, TreeSelect, AjaxResult, RoleMenuTreesele
 // 查询菜单列表
 export function listMenu(query?: MenuQueryParams): Promise<AjaxResult<SysMenu[]>> {
   return request({
-    url: '/system/menu/list',
+    url: '/api/system/menu/list',
     method: 'get',
     params: query
   })
@@ -14,7 +14,7 @@ export function listMenu(query?: MenuQueryParams): Promise<AjaxResult<SysMenu[]>
 // 查询菜单详细
 export function getMenu(menuId: number): Promise<AjaxResult<SysMenu>> {
   return request({
-    url: '/system/menu/' + menuId,
+    url: '/api/system/menu/' + menuId,
     method: 'get'
   })
 }
@@ -22,7 +22,7 @@ export function getMenu(menuId: number): Promise<AjaxResult<SysMenu>> {
 // 查询菜单下拉树结构
 export function treeselect(): Promise<AjaxResult<TreeSelect[]>> {
   return request({
-    url: '/system/menu/treeselect',
+    url: '/api/system/menu/treeselect',
     method: 'get'
   })
 }
@@ -30,7 +30,7 @@ export function treeselect(): Promise<AjaxResult<TreeSelect[]>> {
 // 查询菜单树结构（所有菜单）
 export function menuTreeselect(): Promise<AjaxResult<TreeSelect[]>> {
   return request({
-    url: '/system/menu/treeselect',
+    url: '/api/system/menu/treeselect',
     method: 'get'
   })
 }
@@ -38,7 +38,7 @@ export function menuTreeselect(): Promise<AjaxResult<TreeSelect[]>> {
 // 根据角色 ID 查询菜单下拉树结构
 export function roleMenuTreeselect(roleId: number): Promise<RoleMenuTreeselectResult> {
   return request({
-    url: '/system/menu/roleMenuTreeselect/' + roleId,
+    url: '/api/system/menu/roleMenuTreeselect/' + roleId,
     method: 'get'
   })
 }
@@ -46,7 +46,7 @@ export function roleMenuTreeselect(roleId: number): Promise<RoleMenuTreeselectRe
 // 新增菜单
 export function addMenu(data: SysMenu): Promise<AjaxResult> {
   return request({
-    url: '/system/menu',
+    url: '/api/system/menu',
     method: 'post',
     data: data
   })
@@ -55,7 +55,7 @@ export function addMenu(data: SysMenu): Promise<AjaxResult> {
 // 修改菜单
 export function updateMenu(data: SysMenu): Promise<AjaxResult> {
   return request({
-    url: '/system/menu',
+    url: '/api/system/menu',
     method: 'put',
     data: data
   })
@@ -64,7 +64,7 @@ export function updateMenu(data: SysMenu): Promise<AjaxResult> {
 // 删除菜单
 export function delMenu(menuId: number): Promise<AjaxResult> {
   return request({
-    url: '/system/menu/' + menuId,
+    url: '/api/system/menu/' + menuId,
     method: 'delete'
   })
 }

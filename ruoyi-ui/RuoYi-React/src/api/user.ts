@@ -13,7 +13,7 @@ export interface UserInfoResult {
 // 获取用户详细信息
 export function getInfo(): Promise<UserInfoResult> {
   return request({
-    url: '/getInfo',
+    url: '/api/getInfo',
     method: 'get'
   })
 }
@@ -27,7 +27,7 @@ export interface RouterResult {
 
 export function getRouters(): Promise<RouterResult> {
   return request({
-    url: '/getRouters',
+    url: '/api/getRouters',
     method: 'get'
   })
 }

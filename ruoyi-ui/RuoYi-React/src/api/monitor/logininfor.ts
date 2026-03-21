@@ -5,7 +5,7 @@ import type { LogininforQueryParams, SysLogininfor, AjaxResult, TableDataInfo } 
 // 查询登录日志列表
 export function list(query: LogininforQueryParams): Promise<TableDataInfo<SysLogininfor[]>> {
   return request({
-    url: '/monitor/logininfor/list',
+    url: '/api/monitor/logininfor/list',
     method: 'get',
     params: query
   })
@@ -15,7 +15,7 @@ export function list(query: LogininforQueryParams): Promise<TableDataInfo<SysLog
 export function delLogininfor(infoId: number | number[]): Promise<AjaxResult> {
   const idStr = Array.isArray(infoId) ? infoId.join(',') : infoId.toString()
   return request({
-    url: '/monitor/logininfor/' + idStr,
+    url: '/api/monitor/logininfor/' + idStr,
     method: 'delete'
   })
 }
@@ -23,7 +23,7 @@ export function delLogininfor(infoId: number | number[]): Promise<AjaxResult> {
 // 解锁用户登录状态
 export function unlockLogininfor(userName: string): Promise<AjaxResult> {
   return request({
-    url: '/monitor/logininfor/unlock/' + userName,
+    url: '/api/monitor/logininfor/unlock/' + userName,
     method: 'get'
   })
 }
@@ -31,7 +31,7 @@ export function unlockLogininfor(userName: string): Promise<AjaxResult> {
 // 清空登录日志
 export function cleanLogininfor(): Promise<AjaxResult> {
   return request({
-    url: '/monitor/logininfor/clean',
+    url: '/api/monitor/logininfor/clean',
     method: 'delete'
   })
 }

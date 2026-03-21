@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Table, Card, Button, Space, Form, Input, Select, DatePicker, Modal, message, Tooltip, Switch, Radio, TreeSelect, Row, Col, Tree, Layout } from 'antd'
-import { PlusOutlined, EditOutlined, DeleteOutlined, SearchOutlined, ReloadOutlined, DownloadOutlined, UploadOutlined, KeyOutlined, SafetyCertificateOutlined, FolderOutlined, FolderOpenOutlined } from '@ant-design/icons'
+import { PlusOutlined, EditOutlined, DeleteOutlined, SearchOutlined, ReloadOutlined, DownloadOutlined, UploadOutlined, SafetyCertificateOutlined, FolderOutlined, FolderOpenOutlined, LockOutlined } from '@ant-design/icons'
 import type { ColumnsType } from 'antd/es/table'
 import type { UserQueryParams, SysUser, DeptTree, Post, Role } from '@/types/user'
 import { listUser, getUser, addUser, updateUser, delUser, changeUserStatus, resetUserPwd, deptTreeSelect } from '@/api/system/user'
@@ -12,6 +13,7 @@ const RangePicker = DatePicker.RangePicker
 const { Sider, Content } = Layout
 
 const UserManagement: React.FC = () => {
+  const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
   const [userList, setUserList] = useState<SysUser[]>([])
   const [total, setTotal] = useState(0)
@@ -53,9 +55,10 @@ const UserManagement: React.FC = () => {
     try {
       const res = await deptTreeSelect()
       if (res.code === 200) {
-        setDeptOptions(res.data || [])
-        // 默认折叠所有节点，不设置 expandedKeys
-        setExpandedKeys([])
+        const deptData = res.data || []
+        setDeptOptions(deptData)
+        // 默认展开所有节点
+        setExpandedKeys(getAllDeptKeys(deptData))
       }
     } catch (error) {
       console.error('获取部门树失败:', error)
@@ -318,6 +321,11 @@ const UserManagement: React.FC = () => {
         }
       }
     })
+  }
+
+  // 分配角色
+  const handleAuthRole = (record: SysUser) => {
+    navigate(`/system/user-auth/role/${record.userId}`)
   }
 
   // 提交表单
@@ -587,7 +595,7 @@ const UserManagement: React.FC = () => {
                 <Button
                   type="link"
                   size="small"
-                  icon={<KeyOutlined />}
+                  icon={<LockOutlined />}
                   onClick={() => handleResetPwd(record)}
                 />
               </Tooltip>
@@ -598,7 +606,7 @@ const UserManagement: React.FC = () => {
                   type="link"
                   size="small"
                   icon={<SafetyCertificateOutlined />}
-                  onClick={() => message.info('分配角色功能开发中')}
+                  onClick={() => handleAuthRole(record)}
                 />
               </Tooltip>
             </Auth>

@@ -5,7 +5,7 @@ import type { DeptQueryParams, SysDept, AjaxResult, DeptTreeSelect } from '@/typ
 // 查询部门列表
 export function listDept(query?: DeptQueryParams): Promise<AjaxResult<SysDept[]>> {
   return request({
-    url: '/system/dept/list',
+    url: '/api/system/dept/list',
     method: 'get',
     params: query
   })
@@ -14,7 +14,7 @@ export function listDept(query?: DeptQueryParams): Promise<AjaxResult<SysDept[]>
 // 查询部门列表（排除节点）
 export function listDeptExcludeChild(deptId: number): Promise<AjaxResult<SysDept[]>> {
   return request({
-    url: '/system/dept/list/exclude/' + deptId,
+    url: '/api/system/dept/list/exclude/' + deptId,
     method: 'get'
   })
 }
@@ -22,7 +22,7 @@ export function listDeptExcludeChild(deptId: number): Promise<AjaxResult<SysDept
 // 查询部门详细
 export function getDept(deptId: number): Promise<AjaxResult<SysDept>> {
   return request({
-    url: '/system/dept/' + deptId,
+    url: '/api/system/dept/' + deptId,
     method: 'get'
   })
 }
@@ -30,7 +30,7 @@ export function getDept(deptId: number): Promise<AjaxResult<SysDept>> {
 // 新增部门
 export function addDept(data: SysDept): Promise<AjaxResult> {
   return request({
-    url: '/system/dept',
+    url: '/api/system/dept',
     method: 'post',
     data: data
   })
@@ -39,7 +39,7 @@ export function addDept(data: SysDept): Promise<AjaxResult> {
 // 修改部门
 export function updateDept(data: SysDept): Promise<AjaxResult> {
   return request({
-    url: '/system/dept',
+    url: '/api/system/dept',
     method: 'put',
     data: data
   })
@@ -48,7 +48,7 @@ export function updateDept(data: SysDept): Promise<AjaxResult> {
 // 删除部门
 export function delDept(deptId: number): Promise<AjaxResult> {
   return request({
-    url: '/system/dept/' + deptId,
+    url: '/api/system/dept/' + deptId,
     method: 'delete'
   })
 }
@@ -56,7 +56,7 @@ export function delDept(deptId: number): Promise<AjaxResult> {
 // 查询部门树结构
 export function deptTreeSelect(): Promise<AjaxResult<DeptTreeSelect[]>> {
   return request({
-    url: '/system/dept/treeselect',
+    url: '/api/system/dept/treeselect',
     method: 'get'
   })
 }

@@ -5,7 +5,7 @@ import type { NoticeQueryParams, SysNotice, AjaxResult, TableDataInfo } from '@/
 // 查询公告列表
 export function listNotice(query: NoticeQueryParams): Promise<TableDataInfo<SysNotice[]>> {
   return request({
-    url: '/system/notice/list',
+    url: '/api/system/notice/list',
     method: 'get',
     params: query
   })
@@ -14,7 +14,7 @@ export function listNotice(query: NoticeQueryParams): Promise<TableDataInfo<SysN
 // 查询公告详细
 export function getNotice(noticeId: number): Promise<AjaxResult<SysNotice>> {
   return request({
-    url: '/system/notice/' + noticeId,
+    url: '/api/system/notice/' + noticeId,
     method: 'get'
   })
 }
@@ -22,7 +22,7 @@ export function getNotice(noticeId: number): Promise<AjaxResult<SysNotice>> {
 // 新增公告
 export function addNotice(data: SysNotice): Promise<AjaxResult> {
   return request({
-    url: '/system/notice',
+    url: '/api/system/notice',
     method: 'post',
     data: data
   })
@@ -31,7 +31,7 @@ export function addNotice(data: SysNotice): Promise<AjaxResult> {
 // 修改公告
 export function updateNotice(data: SysNotice): Promise<AjaxResult> {
   return request({
-    url: '/system/notice',
+    url: '/api/system/notice',
     method: 'put',
     data: data
   })
@@ -41,7 +41,7 @@ export function updateNotice(data: SysNotice): Promise<AjaxResult> {
 export function delNotice(noticeId: number | number[]): Promise<AjaxResult> {
   const idStr = Array.isArray(noticeId) ? noticeId.join(',') : noticeId.toString()
   return request({
-    url: '/system/notice/' + idStr,
+    url: '/api/system/notice/' + idStr,
     method: 'delete'
   })
 }

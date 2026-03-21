@@ -5,7 +5,7 @@ import type { DictTypeQueryParams, SysDictType, DictDataQueryParams, SysDictData
 // 查询字典类型列表
 export function listType(query: DictTypeQueryParams): Promise<TableDataInfo<SysDictType[]>> {
   return request({
-    url: '/system/dict/type/list',
+    url: '/api/system/dict/type/list',
     method: 'get',
     params: query
   })
@@ -14,7 +14,7 @@ export function listType(query: DictTypeQueryParams): Promise<TableDataInfo<SysD
 // 查询字典类型详细
 export function getType(dictId: number): Promise<AjaxResult<SysDictType>> {
   return request({
-    url: '/system/dict/type/' + dictId,
+    url: '/api/system/dict/type/' + dictId,
     method: 'get'
   })
 }
@@ -22,7 +22,7 @@ export function getType(dictId: number): Promise<AjaxResult<SysDictType>> {
 // 新增字典类型
 export function addType(data: SysDictType): Promise<AjaxResult> {
   return request({
-    url: '/system/dict/type',
+    url: '/api/system/dict/type',
     method: 'post',
     data: data
   })
@@ -31,7 +31,7 @@ export function addType(data: SysDictType): Promise<AjaxResult> {
 // 修改字典类型
 export function updateType(data: SysDictType): Promise<AjaxResult> {
   return request({
-    url: '/system/dict/type',
+    url: '/api/system/dict/type',
     method: 'put',
     data: data
   })
@@ -41,7 +41,7 @@ export function updateType(data: SysDictType): Promise<AjaxResult> {
 export function delType(dictId: number | number[]): Promise<AjaxResult> {
   const idStr = Array.isArray(dictId) ? dictId.join(',') : dictId.toString()
   return request({
-    url: '/system/dict/type/' + idStr,
+    url: '/api/system/dict/type/' + idStr,
     method: 'delete'
   })
 }
@@ -49,7 +49,7 @@ export function delType(dictId: number | number[]): Promise<AjaxResult> {
 // 刷新字典缓存
 export function refreshCache(): Promise<AjaxResult> {
   return request({
-    url: '/system/dict/type/refreshCache',
+    url: '/api/system/dict/type/refreshCache',
     method: 'delete'
   })
 }
@@ -57,7 +57,7 @@ export function refreshCache(): Promise<AjaxResult> {
 // 获取字典选择框列表
 export function optionselect(): Promise<AjaxResult<SysDictType[]>> {
   return request({
-    url: '/system/dict/type/optionselect',
+    url: '/api/system/dict/type/optionselect',
     method: 'get'
   })
 }
@@ -65,7 +65,7 @@ export function optionselect(): Promise<AjaxResult<SysDictType[]>> {
 // 查询字典数据列表
 export function listData(query: DictDataQueryParams): Promise<TableDataInfo<SysDictData[]>> {
   return request({
-    url: '/system/dict/data/list',
+    url: '/api/system/dict/data/list',
     method: 'get',
     params: query
   })
@@ -74,7 +74,7 @@ export function listData(query: DictDataQueryParams): Promise<TableDataInfo<SysD
 // 查询字典数据详细
 export function getData(dictCode: number): Promise<AjaxResult<SysDictData>> {
   return request({
-    url: '/system/dict/data/' + dictCode,
+    url: '/api/system/dict/data/' + dictCode,
     method: 'get'
   })
 }
@@ -82,7 +82,7 @@ export function getData(dictCode: number): Promise<AjaxResult<SysDictData>> {
 // 新增字典数据
 export function addData(data: SysDictData): Promise<AjaxResult> {
   return request({
-    url: '/system/dict/data',
+    url: '/api/system/dict/data',
     method: 'post',
     data: data
   })
@@ -91,7 +91,7 @@ export function addData(data: SysDictData): Promise<AjaxResult> {
 // 修改字典数据
 export function updateData(data: SysDictData): Promise<AjaxResult> {
   return request({
-    url: '/system/dict/data',
+    url: '/api/system/dict/data',
     method: 'put',
     data: data
   })
@@ -101,7 +101,7 @@ export function updateData(data: SysDictData): Promise<AjaxResult> {
 export function delData(dictCode: number | number[]): Promise<AjaxResult> {
   const idStr = Array.isArray(dictCode) ? dictCode.join(',') : dictCode.toString()
   return request({
-    url: '/system/dict/data/' + idStr,
+    url: '/api/system/dict/data/' + idStr,
     method: 'delete'
   })
 }
@@ -109,7 +109,7 @@ export function delData(dictCode: number | number[]): Promise<AjaxResult> {
 // 根据字典类型查询字典数据信息
 export function getDicts(dictType: string): Promise<AjaxResult<SysDictData[]>> {
   return request({
-    url: '/system/dict/data/type/' + dictType,
+    url: '/api/system/dict/data/type/' + dictType,
     method: 'get'
   })
 }

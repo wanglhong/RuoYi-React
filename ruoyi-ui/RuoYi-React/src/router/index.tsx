@@ -31,6 +31,12 @@ export const constantRoutes = [
         element: lazyLoad(lazy(() => import('@/views/index'))),
         meta: { title: '首页', icon: 'home' }
       },
+      // 个人中心
+      {
+        path: 'user/profile/:activeTab?',
+        element: lazyLoad(lazy(() => import('@/views/system/user/profile'))),
+        meta: { title: '个人中心', icon: 'user', hidden: true }
+      },
       // 系统管理模块
       {
         path: 'system/user',
@@ -146,11 +152,6 @@ export const constantRoutes = [
 
 // 动态路由（用于权限控制）
 export const dynamicRoutes = [
-  {
-    path: '/system/user-auth/role/:userId',
-    element: lazyLoad(lazy(() => import('@/views/system/user'))),
-    meta: { title: '分配角色', hidden: true, activeMenu: '/system/user' }
-  },
   {
     path: '/system/role-auth/user/:roleId',
     element: lazyLoad(lazy(() => import('@/views/system/role'))),
